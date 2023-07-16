@@ -1,0 +1,316 @@
+body {
+    background: #222222;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
+    text-align: center;
+    align-items: center;
+}
+
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+input[type="time"]::-webkit-calendar-picker-indicator,
+input[type="time"]::-webkit-calendar-picker-indicator {
+    display: none;
+    -webkit-appearance: none;
+}
+
+p {display:inline;margin:0px;}
+
+.dates {
+    margin: 2px;
+    width: 90px;
+    height: 15px;
+    font-size: small;
+    border: 0px;
+    background-color: transparent;
+    color: #ffffff;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.myClass {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+    width: 500px;
+    background-color: #ffffff;
+    box-shadow: 3px 3px 6px#777777;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.taskText {
+    display: flex;
+    justify-content: left;
+    margin-left: 35px;
+    margin-top: 20px;
+    overflow: hidden;
+    text-align: left;
+    width: 300px;
+    font-weight: bolder;
+    font-size: 20px;
+    border: 0px;
+    height: 30px;
+}
+
+.commentText {
+    display: flex;
+    justify-content: left;
+    padding-left: 70px;
+    overflow: hidden;
+    text-align: left;
+    width: 370px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.main {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+
+/* #invisible{
+    display: none;
+} */
+
+.newTask {
+    height: 160px;
+    border-radius: 15px;
+    width: 496px;
+    background-color: #ffffff;
+    box-shadow: 3px 3px 6px #111111;
+    border: 0px;
+    border-radius: 10px;
+    /* margin-top: 10px; */
+    font-family: 'Quicksand', sans-serif;
+    font-size: 18px;
+}
+
+input,
+select,
+textarea {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.comment {
+    width: 325px;
+    height: 80px;
+    margin-left: 32px;
+    text-align: initial;
+    justify-content: left;
+    font-size: medium;
+}
+
+.comments {
+    width: 420px;
+    height: 65px;
+
+    border: #ffffff;
+    font-size: medium;
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow: visible;
+}
+
+.inputText {
+    margin-top: 30px;
+    width: 325px;
+    margin-left: 12px;
+}
+
+#btn {
+    justify-content: baseline;
+    width: 90px;
+    height: 30px;
+    background-color: #777777;
+    color: white;
+    border-radius: 10px;
+    margin-top: 30px;
+    margin-right: 30px;
+    border: 0px;
+    font-weight: bolder;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+    margin-top: -5px;
+}
+
+.group1 {
+    display: flex;
+    flex-direction: column;
+    width: 90px;
+    margin-top: 0px;
+}
+
+.subgroup {
+    display: flex;
+    flex-direction: row;
+}
+
+.subgroup1 {
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    margin-left: 170px;
+    margin-top: -23px;
+}
+
+.subgroup2 {
+    display: flex;
+    flex-direction: row;
+    width: 700px;
+    margin-left: 20px;
+    margin-top: -10px;
+
+}
+
+.space {
+    width: 10px;
+    height: 10px;
+}
+
+.date {
+    padding-top: 0;
+    margin-top: 0px;
+    justify-content: center;
+    width: 130px;
+    height: 40px;
+    background-color: green;
+    color: white;
+    font-size: small;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+}
+
+.dateUndone {
+    padding-top: 0;
+    margin-top: 0px;
+    justify-content: center;
+    width: 150px;
+    height: 40px;
+    background-color: #777777;
+    color: white;
+    font-size: small;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+}
+
+.dateOver {
+    padding-top: 0;
+    margin-top: 0px;
+    justify-content: center;
+    width: 150px;
+    height: 40px;
+    background-color: red;
+    color: white;
+    font-size: small;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+}
+
+.dateDone {
+    padding-top: 0;
+    margin-top: 0px;
+    justify-content: center;
+    width: 150px;
+    height: 40px;
+    background-color: green;
+    color: white;
+    font-size: small;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-right: 30px;
+}
+
+#newTask {
+    display: flex;
+}
+
+.CommentExample {
+    padding-top: -10px;
+    margin-top: -10px;
+    margin-left: 35px;
+    text-align: start;
+    justify-content: baseline;
+    width: 430px;
+    font-size: medium;
+}
+
+.medium {
+    font-size: medium;
+    text-align: center;
+    justify-content: center;
+}
+
+.mediumbold {
+    font-size: medium;
+    text-align: left;
+    justify-content: center;
+    font-weight: bolder;
+    border: 0px;
+
+}
+
+.trash {
+    height: 25px;
+    margin-top: 0px;
+    margin-left: 115px;
+}
+
+.pen {
+    height: 25px;
+}
+
+.label {
+    vertical-align: baseline;
+}
+
+#radio1,
+#radio2,
+#radio3,
+#radio4,
+#radio5,
+#radio6 {
+    vertical-align: middle;
+}
+
+.name {
+    display: flex;
+    justify-content: left;
+    margin-left: 40px;
+    vertical-align: middle;
+
+    width: 100px;
+    text-align: left;
+}
+
+#AddName {
+    margin-top: 5px;
+}
+
+h1 {
+    color: #ffffff;
+}
+
+input.e-input-group-icon.e-date-icon.e-icons {
+    display: none;
+}

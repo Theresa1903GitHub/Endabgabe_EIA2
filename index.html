@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endabgabe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <script src="generateContent.js" type="text/javascript" charset="utf-8"></script>
+    <script src="./Aufgabenliste.js" defer></script>
+</head>
+
+<body>
+    <main>
+        <div id="graphic">
+            <canvas width=45% height=1000></canvas>
+        </div>
+
+        <div id="menu">
+            <h1>Speisekarte</h1>
+            <form id="inputGroup">
+                <div class="wrapper" id="wrap">
+                    <div class="newTask" id="addNewTask">
+                        <div class="subgroup2">
+                            <input type="text" class="inputText" id="inputText" required placeholder="Name of the recipe"></input>
+                            <div class="space"></div>
+                            <div class="addButton">
+                                <button id="btn">add</button>
+                            </div>
+                        </div>
+                        <div class="space"></div>
+                        <div class="subgroup">
+                            <input type="text" class="comment" id="comment" placeholder="Add a comment"></input>
+                            <div class="space"></div>
+                            <div class="group">
+                                <select name="name" id="AddName">
+                                    <option value="Schokolade">Schokolade</option>
+                                    <option value="Vanille">Vanille</option>
+                                    <option value="Erdbeere">Erdbeere</option>
+                                    <option value="Melone">Melone</option>
+                                    <option value="Pistazie">Pistazie</option>
+                        </select>
+                        <div class="space"></div>
+                        <input type="date" id="date" value="2023-04-13"></input>
+                        <div class="space"></div>
+                        <input type="time" name="time" id="time" value="10:05">
+                    </div>
+                </div>
+            </div>
+            <div class="space"></div>
+            <div class="task" id="toDoList"></div>
+        </form>
+    </div>
+    </main>
+</body>
+
+</html>

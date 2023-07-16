@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endabgabe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+    <link rel="stylesheet" href="stylesheet.css">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300&display=swap" rel="stylesheet">
+    <script src="Vector.js"></script>
+    <script src="Iceball.js"></script>
+    <script src="Cream.js"></script>
+    <script src="Sprinkle.js"></script>
+    <script src="Sauce.js"></script>
+    <script src="Customer.js"></script>
+    <script src="generateNewSundae.js" type="text/javascript" charset="utf-8"></script>
+    <script src="Menu.js" defer></script>
+    
+</head>
+
+<body>
+    <main>
+        <div id="besides">
+            <div>
+            <canvas width="730px" height="720px"></canvas>
+        </div>
+        <div>
+            <h1>Speisekarte</h1>
+            <form>
+                <div class="wrapper" id="wrap">
+                    <div class="SundaeFormular">
+                        <input type="text" class="recipeTitle" id="recipeTitle" required placeholder="New Recipe"></input>
+                        <br><br>
+                        <select name="flavor" id="flavor">
+                            <option value="Schokolade">Schokolade</option>
+                            <option value="Vanille">Vanille</option>
+                            <option value="Erdbeere">Erdbeere</option>
+                            <option value="Melone">Melone</option>
+                            <option value="Pistazie">Pistazie</option>
+                        </select>
+
+                        <input type="number" id="iceballs" min="0" max="5" required placeholder="0"></input>
+
+                        <input type="checkbox" id="cream">Sahne</input>
+
+                        <input type="checkbox" id="sprinkles">Streusel</input>
+
+                        <select name="sauce" id="sauce">
+                            <option value="Erdbeersoße">Erdbeersoße</option>
+                            <option value="Schokosoße">Schokosoße</option>
+                            <option value="keine Soße">keine Soße</option>
+                        </select>
+
+                        <input type="number" id="price" min="0" required placeholder="0"></input>
+    
+                        <div class="addButton">
+                            <button id="btn">add</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        <div class="space"></div>
+        <div class="task" id="menu"></div>
+    </div>
+    </main>
+</body>
+</html>

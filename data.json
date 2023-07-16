@@ -1,0 +1,9 @@
+        {
+            "name": "Schokobecher",
+            "flavor": "Schokolade",
+            "iceballs": "3",
+            "cream": true,
+            "sauce": "Schokosoße",
+            "sprinkles": true,
+            "price": "5€"
+        }
