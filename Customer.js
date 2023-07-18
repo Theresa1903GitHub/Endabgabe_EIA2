@@ -170,8 +170,11 @@ var Endabgabe;
         move(_timeslice, _strength) {
             if (this.activity == "waiting") {
                 setTimeout(() => {
-                    this.status = "angry";
-                }, 10000);
+                    if (this.activity == "waiting") {
+                        this.status = "angry";
+                    }
+                    ;
+                }, 13000);
                 return;
             }
             if (this.activity == "move") {

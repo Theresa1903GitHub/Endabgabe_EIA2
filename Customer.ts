@@ -181,9 +181,9 @@ namespace Endabgabe {
 
         public move(_timeslice: number, _strength?: number):void{ 
             if (this.activity == "waiting"){
-                setTimeout(() => {
-                    this.status = "angry";
-                  }, 10000);
+                setTimeout(() => {if (this.activity == "waiting"){
+                    this.status = "angry"};
+                  }, 13000);
                 return;
             }   
             if (this.activity == "move"){
