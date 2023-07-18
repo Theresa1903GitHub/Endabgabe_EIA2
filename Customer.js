@@ -164,9 +164,6 @@ var Endabgabe;
             Endabgabe.crc2.strokeText(order, 0, 0);
             Endabgabe.crc2.restore();
         }
-        waiting() {
-            return;
-        }
         move(_timeslice, _strength) {
             if (this.activity == "waiting") {
                 setTimeout(() => {

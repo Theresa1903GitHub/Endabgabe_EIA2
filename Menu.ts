@@ -48,6 +48,7 @@ namespace Endabgabe {
     export let sauceBoolean : boolean = false;
     let sauce : string = "keine Soße";
     let price : number = 0;
+    let money: number = 0;
     let currentPrice : string;
 
     export let iceball: Iceball = new Iceball();
@@ -238,10 +239,22 @@ function drawPrice(_x:number, _y:number){
     crc2.fillText("Preis: " + priceText +"€", 0, 5);
     crc2.closePath();
     crc2.restore();
-}
+};
+function drawIncome(_x:number, _y:number){
+    let incomeText : string = money.toString();
+
+    crc2.save();
+    crc2.translate(_x, _y);
+    crc2.beginPath;
+    crc2.fillStyle = "black";
+    crc2.font = "15px Quicksand black";
+    crc2.fillText("Einnahmen: " + incomeText +"€", 0, 5);
+    crc2.closePath();
+    crc2.restore();
+};
 
 function create(): void{
-    for (let index: number = 0; index < 3; index++){
+    for (let index: number = 0; index < 10; index++){
         randomSundae = Math.floor(Math.random()*Menu.length);
         
         let randomY: number =  Math.random() * (-100) - (200 * index);
@@ -259,7 +272,8 @@ export function update():void {
     Whip.draw(570, 650); 
     droppedSauce.draw(saucecolor, 570, 650);
     Sprinkles.draw(570, 670);
-    drawPrice(630, 650);  
+    drawPrice(630, 650); 
+    drawIncome(610, 675);  
     for (let customer of customeri) {
         customer.draw(randomSundae);
         customer.move(1/100);
@@ -508,6 +522,9 @@ function finishedSundae (_data: menu): boolean{
         mySundae.price == recipe[orderedNumber*7+6]){
         // console.log("passt");
         waitingCustomers[0].status = "happy";
+        let moneyOfOne : number = parseInt(recipe[orderedNumber*7+6], 10)
+        
+        money += moneyOfOne;
         return true;
     }
     else{

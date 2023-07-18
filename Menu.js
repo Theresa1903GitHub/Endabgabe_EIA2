@@ -28,6 +28,7 @@ var Endabgabe;
     Endabgabe.sauceBoolean = false;
     let sauce = "keine Soße";
     let price = 0;
+    let money = 0;
     let currentPrice;
     Endabgabe.iceball = new Endabgabe.Iceball();
     Endabgabe.Whip = new Endabgabe.Cream(Endabgabe.cream);
@@ -190,8 +191,21 @@ var Endabgabe;
         Endabgabe.crc2.closePath();
         Endabgabe.crc2.restore();
     }
+    ;
+    function drawIncome(_x, _y) {
+        let incomeText = money.toString();
+        Endabgabe.crc2.save();
+        Endabgabe.crc2.translate(_x, _y);
+        Endabgabe.crc2.beginPath;
+        Endabgabe.crc2.fillStyle = "black";
+        Endabgabe.crc2.font = "15px Quicksand black";
+        Endabgabe.crc2.fillText("Einnahmen: " + incomeText + "€", 0, 5);
+        Endabgabe.crc2.closePath();
+        Endabgabe.crc2.restore();
+    }
+    ;
     function create() {
-        for (let index = 0; index < 3; index++) {
+        for (let index = 0; index < 10; index++) {
             Endabgabe.randomSundae = Math.floor(Math.random() * Endabgabe.Menu.length);
             let randomY = Math.random() * (-100) - (200 * index);
             let customer = new Endabgabe.Customer(randomY, Endabgabe.randomSundae);
@@ -207,6 +221,7 @@ var Endabgabe;
         Endabgabe.droppedSauce.draw(Endabgabe.saucecolor, 570, 650);
         Endabgabe.Sprinkles.draw(570, 670);
         drawPrice(630, 650);
+        drawIncome(610, 675);
         for (let customer of Endabgabe.customeri) {
             customer.draw(Endabgabe.randomSundae);
             customer.move(1 / 100);
@@ -453,6 +468,8 @@ var Endabgabe;
             mySundae.price == recipe[orderedNumber * 7 + 6]) {
             // console.log("passt");
             Endabgabe.waitingCustomers[0].status = "happy";
+            let moneyOfOne = parseInt(recipe[orderedNumber * 7 + 6], 10);
+            money += moneyOfOne;
             return true;
         }
         else {

@@ -174,11 +174,6 @@ namespace Endabgabe {
             crc2.restore();
         }
 
-        public waiting(): void{
-           
-            return
-        }
-
         public move(_timeslice: number, _strength?: number):void{ 
             if (this.activity == "waiting"){
                 setTimeout(() => {if (this.activity == "waiting"){
