@@ -6,7 +6,7 @@ var Endabgabe;
         Name: Theresa Hauser
         Matrikel: 272983
         Datum: 03.07.23
-        Zusammenarbeit mit Pia Schwer, Marie Eckl
+        Zusammenarbeit mit Pia Schwer
         Quellen: Stack Overflow, Developer Mozilla, Inverted Classroom Jirka, Tasks aus EIA1&2
         */
     window.addEventListener("load", handleLoad);
@@ -39,7 +39,6 @@ var Endabgabe;
         let response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
         let sundae = await response.text();
         data = JSON.parse(sundae);
-        console.log(data);
         Endabgabe.generateNewSundae(data);
         drawBackground();
         create();
@@ -64,13 +63,6 @@ var Endabgabe;
         };
         let query = JSON.stringify(newSundae);
         await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=insert&collection=Recipes&data=" + query);
-        Title.value = "New Recipe";
-        Flavor.value = "Schokolade";
-        Iceballs.value = "0";
-        Cream.checked = false;
-        Sauce.value = "keine Soße";
-        Sprinkles.checked = false;
-        Price.value = "0";
     }
     ;
     function drawBackground() {
@@ -108,6 +100,8 @@ var Endabgabe;
         // Tische
         drawTable(120, 185);
         drawTable(120, 385);
+        drawTable(600, 185);
+        drawTable(600, 385);
     }
     ;
     function drawSauce(_x, _y, _color) {
@@ -248,14 +242,62 @@ var Endabgabe;
         if (190 >= hotspot.x && hotspot.x >= 50 && 255 >= hotspot.y && hotspot.y >= 115) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 1;
+            finishedSundae(data);
             Endabgabe.waitingCustomers.shift();
+            for (let customer of Endabgabe.waitingCustomers) {
+                customer.activity = "move";
+                customer.velocity.set(0, 80);
+            }
+            Endabgabe.queueLength += 75;
+            Endabgabe.waitingCustomers = [];
+            for (let customer of Endabgabe.customeri) {
+                customer.draw(Endabgabe.randomSundae);
+                customer.move(1 / 100);
+            }
         }
         if (190 >= hotspot.x && hotspot.x >= 50 && 455 >= hotspot.y && hotspot.y >= 315) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 2;
             finishedSundae(data);
             Endabgabe.waitingCustomers.shift();
+            for (let customer of Endabgabe.waitingCustomers) {
+                customer.activity = "move";
+                customer.velocity.set(0, 80);
+            }
             Endabgabe.queueLength += 75;
+            Endabgabe.waitingCustomers = [];
+            for (let customer of Endabgabe.customeri) {
+                customer.draw(Endabgabe.randomSundae);
+                customer.move(1 / 100);
+            }
+        }
+        if (670 >= hotspot.x && hotspot.x >= 530 && 255 >= hotspot.y && hotspot.y >= 115) {
+            Endabgabe.waitingCustomers[0].activity = "served";
+            Endabgabe.waitingCustomers[0].table = 3;
+            finishedSundae(data);
+            Endabgabe.waitingCustomers.shift();
+            for (let customer of Endabgabe.waitingCustomers) {
+                customer.activity = "move";
+                customer.velocity.set(0, 80);
+            }
+            Endabgabe.queueLength += 75;
+            Endabgabe.waitingCustomers = [];
+            for (let customer of Endabgabe.customeri) {
+                customer.draw(Endabgabe.randomSundae);
+                customer.move(1 / 100);
+            }
+        }
+        if (670 >= hotspot.x && hotspot.x >= 530 && 455 >= hotspot.y && hotspot.y >= 315) {
+            Endabgabe.waitingCustomers[0].activity = "served";
+            Endabgabe.waitingCustomers[0].table = 4;
+            finishedSundae(data);
+            Endabgabe.waitingCustomers.shift();
+            for (let customer of Endabgabe.waitingCustomers) {
+                customer.activity = "move";
+                customer.velocity.set(0, 80);
+            }
+            Endabgabe.queueLength += 75;
+            Endabgabe.waitingCustomers = [];
             for (let customer of Endabgabe.customeri) {
                 customer.draw(Endabgabe.randomSundae);
                 customer.move(1 / 100);
@@ -351,6 +393,7 @@ var Endabgabe;
             mySundae.sprinkles == recipe[orderedNumber * 7 + 5] &&
             mySundae.price == recipe[orderedNumber * 7 + 6]) {
             // console.log("passt");
+            Endabgabe.waitingCustomers[0].status = "happy";
             return true;
         }
         else {

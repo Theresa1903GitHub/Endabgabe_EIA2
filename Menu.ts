@@ -4,7 +4,7 @@ namespace Endabgabe {
         Name: Theresa Hauser
         Matrikel: 272983
         Datum: 03.07.23
-        Zusammenarbeit mit Pia Schwer, Marie Eckl
+        Zusammenarbeit mit Pia Schwer
         Quellen: Stack Overflow, Developer Mozilla, Inverted Classroom Jirka, Tasks aus EIA1&2
         */
 
@@ -65,7 +65,6 @@ namespace Endabgabe {
         let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
         let sundae: string = await response.text();
         data = JSON.parse(sundae);
-        console.log(data);
 
         generateNewSundae(data);
 
@@ -83,8 +82,7 @@ namespace Endabgabe {
         let Sprinkles: HTMLInputElement = <HTMLInputElement>document.querySelector("#sprinkles");
         let Price: HTMLInputElement = <HTMLInputElement>document.querySelector("#price");
 
-        let newSundae: Sundae =
-        {
+        let newSundae: Sundae = {
             title: Title.value,
             flavor: Flavor.value,
             iceballs: Iceballs.value,
@@ -96,14 +94,6 @@ namespace Endabgabe {
 
         let query = JSON.stringify(newSundae);
         await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=insert&collection=Recipes&data=" + query);
-
-        Title.value = "New Recipe";
-        Flavor.value = "Schokolade";
-        Iceballs.value = "0";
-        Cream.checked = false;
-        Sauce.value = "keine Soße";
-        Sprinkles.checked = false;
-        Price.value = "0";
     };
 
 function drawBackground(): void {
@@ -144,6 +134,8 @@ function drawIceCreamShop() {
     // Tische
     drawTable(120, 185);
     drawTable(120, 385);
+    drawTable(600, 185);
+    drawTable(600, 385);
 };
 
 function drawSauce(_x:number, _y:number, _color: string){
@@ -233,7 +225,7 @@ export function update():void {
     drawPrice(630, 650);  
     for (let customer of customeri) {
         customer.draw(randomSundae);
-        customer.move(1/100)
+        customer.move(1/100);
         }
 }
       
@@ -295,14 +287,58 @@ function handleClickevent(_event: MouseEvent): void {
     if (190 >= hotspot.x && hotspot.x >= 50 && 255 >= hotspot.y && hotspot.y >= 115){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 1;
+           finishedSundae(data);
         waitingCustomers.shift();
+        for (let customer of waitingCustomers){
+            customer.activity = "move";
+            customer.velocity.set (0,80);}
+        queueLength += 75;
+        waitingCustomers = []
+        for (let customer of customeri) {
+            customer.draw(randomSundae);
+            customer.move(1/100)
+        } 
     }
     if (190 >= hotspot.x && hotspot.x >= 50 && 455 >= hotspot.y && hotspot.y >= 315){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 2;
         finishedSundae(data);
         waitingCustomers.shift();
+        for (let customer of waitingCustomers){
+            customer.activity = "move";
+            customer.velocity.set (0,80);}
         queueLength += 75;
+        waitingCustomers = []
+        for (let customer of customeri) {
+            customer.draw(randomSundae);
+            customer.move(1/100)
+        } 
+    }
+    if (670 >= hotspot.x && hotspot.x >= 530 && 255 >= hotspot.y && hotspot.y >= 115){
+        waitingCustomers[0].activity = "served";
+        waitingCustomers[0].table = 3;
+           finishedSundae(data);
+        waitingCustomers.shift();
+        for (let customer of waitingCustomers){
+            customer.activity = "move";
+            customer.velocity.set (0,80);}
+        queueLength += 75;
+        waitingCustomers = []
+        for (let customer of customeri) {
+            customer.draw(randomSundae);
+            customer.move(1/100)
+        } 
+    }
+    if (670 >= hotspot.x && hotspot.x >= 530 && 455 >= hotspot.y && hotspot.y >= 315){
+        waitingCustomers[0].activity = "served";
+        waitingCustomers[0].table = 4;
+        finishedSundae(data);
+        waitingCustomers.shift();
+        for (let customer of waitingCustomers){
+            customer.activity = "move";
+            customer.velocity.set (0,80);}
+        queueLength += 75;
+        waitingCustomers = []
         for (let customer of customeri) {
             customer.draw(randomSundae);
             customer.move(1/100)
@@ -403,6 +439,7 @@ function finishedSundae (_data: menu): boolean{
         mySundae.sprinkles == recipe[orderedNumber*7+5] &&
         mySundae.price == recipe[orderedNumber*7+6]){
         // console.log("passt");
+        waitingCustomers[0].status = "happy";
         return true;
     }
     else{

@@ -101,14 +101,51 @@ var Endabgabe;
                 Endabgabe.crc2.lineWidth = 3;
                 Endabgabe.crc2.stroke();
                 Endabgabe.crc2.beginPath();
-                // crc2.ellipse(15, -10, 70, 45, 0, 0, 2*Math.PI, true)
-                // crc2.closePath();
-                // crc2.fillStyle = "white";
-                // crc2.fill();
                 Endabgabe.crc2.strokeStyle = "black";
                 Endabgabe.crc2.lineWidth = 2;
                 Endabgabe.crc2.font = "15px Quicksand";
                 Endabgabe.crc2.fillText(order, 30, 5);
+                Endabgabe.crc2.restore();
+            }
+            if (this.activity == "sitting") {
+                Endabgabe.crc2.save();
+                Endabgabe.crc2.translate(this.position.x, this.position.y);
+                Endabgabe.crc2.beginPath();
+                Endabgabe.crc2.arc(0, 0, 20, 0, 2 * Math.PI, true);
+                if (this.status == "happy") {
+                    Endabgabe.crc2.fillStyle = "#fde1b4";
+                }
+                else {
+                    Endabgabe.crc2.fillStyle = "red";
+                }
+                Endabgabe.crc2.fill();
+                Endabgabe.crc2.strokeStyle = "black";
+                Endabgabe.crc2.lineWidth = 0.5;
+                Endabgabe.crc2.stroke();
+                Endabgabe.crc2.closePath();
+                // Auge links
+                Endabgabe.crc2.beginPath();
+                Endabgabe.crc2.arc(-5, -2, 3, 0, 2 * Math.PI, true);
+                Endabgabe.crc2.fillStyle = "black";
+                Endabgabe.crc2.fill();
+                Endabgabe.crc2.closePath();
+                // Auge rechts
+                Endabgabe.crc2.beginPath();
+                Endabgabe.crc2.arc(5, -2, 3, 0, 2 * Math.PI, true);
+                Endabgabe.crc2.fillStyle = "black";
+                Endabgabe.crc2.fill();
+                Endabgabe.crc2.closePath();
+                // Mund
+                Endabgabe.crc2.beginPath();
+                if (this.status == "happy") {
+                    Endabgabe.crc2.arc(0, 0, 10, 0.2 * Math.PI, 0.8 * Math.PI);
+                }
+                else {
+                    Endabgabe.crc2.arc(0, 15, 10, 1.2 * Math.PI, 1.8 * Math.PI);
+                }
+                Endabgabe.crc2.strokeStyle = "black";
+                Endabgabe.crc2.lineWidth = 3;
+                Endabgabe.crc2.stroke();
                 Endabgabe.crc2.restore();
             }
         }
@@ -132,6 +169,9 @@ var Endabgabe;
         }
         move(_timeslice, _strength) {
             if (this.activity == "waiting") {
+                setTimeout(() => {
+                    this.status = "angry";
+                }, 10000);
                 return;
             }
             if (this.activity == "move") {
@@ -155,16 +195,25 @@ var Endabgabe;
                 if (this.table == 2) {
                     this.velocity.set(-70, -40);
                 }
+                if (this.table == 3) {
+                    this.velocity.set(40, -80);
+                }
+                if (this.table == 4) {
+                    this.velocity.set(70, -40);
+                }
                 let offset = new Endabgabe.Vector(this.velocity.x, this.velocity.y);
                 offset.scale(_timeslice);
                 this.position.add(offset);
-                // let queueLength = queue + ((waitingCustomers.length+2)*70);
-                // console.log(queueLength);
-                if (this.position.x <= 200) {
-                    this.activity = "move";
-                    setTimeout(Endabgabe.update, 200);
-                    this.velocity.set(0, -80);
+                if (this.position.x <= 210 || this.position.x >= 550) {
+                    this.activity = "eating";
                 }
+            }
+            if (this.activity == "eating") {
+                this.activity = "sitting";
+                setTimeout(() => {
+                    this.activity = "move";
+                }, 6000);
+                this.velocity.set(0, -80);
             }
             if (this.activity == "moveout") {
                 this.velocity.set(0, -80);

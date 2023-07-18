@@ -18,17 +18,17 @@ input[type="time"]::-webkit-calendar-picker-indicator {
     -webkit-appearance: none;
 }
 
-p {display:inline;
+p, .p {display:inline;
     margin:0px;
-    font-size: 14px;
+    font-size: 12px;
     }
 
 .wrapper {
-    width: 760px;
+    width: 770px;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content:space-between;
     align-items: center;
 }
 
@@ -42,10 +42,9 @@ p {display:inline;
 
 .newSundae {
     background-color: #ffffff;
-    width: 700px;
-    height: 50px;
+    width: 650px;
+    height: 25px;
     border-radius: 15px;
-    width: 496px;
     box-shadow: 3px 3px 6px #111111;
     border: 0px;
     border-radius: 10px;
@@ -56,10 +55,10 @@ p {display:inline;
 
 .SundaeFormular {
     background-color: #ffffff;
-    width: 800px;
+    width: 650px;
     height: 100px;
+    justify-content: center;
     border-radius: 15px;
-    width: 496px;
     box-shadow: 3px 3px 6px #111111;
     border: 0px;
     border-radius: 10px;
@@ -80,6 +79,7 @@ input,
 select,
 textarea {
     font-family: 'Quicksand', sans-serif;
+    font-size: 12px;
 }
 
 .inputText {
@@ -104,47 +104,11 @@ textarea {
 .recipeTitle {
     font-size: 20px;
     font-weight: bolder;
-    width: 170px;
-}
-
-.group {
-    display: flex;
-    flex-direction: column;
-    width: 90px;
-    margin-top: -5px;
-}
-
-.group1 {
-    display: flex;
-    flex-direction: column;
-    width: 90px;
-    margin-top: 0px;
-}
-
-.subgroup {
-    display: flex;
-    flex-direction: row;
-}
-
-.subgroup1 {
-    display: flex;
-    flex-direction: row;
-    width: 700px;
-    margin-left: 170px;
-    margin-top: -23px;
-}
-
-.subgroup2 {
-    display: flex;
-    flex-direction: row;
-    width: 700px;
-    margin-left: 20px;
-    margin-top: -10px;
-
+    width: 150px;
 }
 
 .space {
-    width: 10px;
+    width: 2px;
     height: 10px;
 }
 
@@ -172,7 +136,7 @@ canvas {
 
 .flavorInput{
     width: 70px;
-    text-align: right;
+    text-align: left;
 }
 
 .iceballsInput{
