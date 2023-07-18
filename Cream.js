@@ -6,16 +6,16 @@ var Endabgabe;
         color;
         size;
         state;
-        constructor(_positionX, _positionY) {
-            this.position = new Endabgabe.Vector(_positionX, _positionY);
+        constructor() {
+            // this.position = new Vector (_positionX, _positionY);
             this.color = "white";
             this.size = 1.2;
             this.state = false;
         }
-        draw() {
+        draw(_positionX, _positionY) {
             if (this.state == true) {
                 Endabgabe.crc2.save();
-                Endabgabe.crc2.translate(this.position.x, this.position.y);
+                Endabgabe.crc2.translate(_positionX, _positionY);
                 Endabgabe.crc2.beginPath();
                 Endabgabe.crc2.moveTo(0, 0);
                 Endabgabe.crc2.lineTo(5 * this.size, 10 * this.size);

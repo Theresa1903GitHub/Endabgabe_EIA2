@@ -6,13 +6,13 @@ var Endabgabe;
         color;
         number;
         constructor() {
-            this.position = new Endabgabe.Vector(570, 670);
+            // this.position = ;
             // this.color = _color;
             // this.number = _number;
         }
-        draw(_color, _number) {
+        draw(_color, _number, _positionX, _positionY) {
             Endabgabe.crc2.save();
-            Endabgabe.crc2.translate(this.position.x, this.position.y);
+            Endabgabe.crc2.translate(_positionX, _positionY);
             Endabgabe.crc2.lineWidth = 0.3;
             Endabgabe.crc2.strokeStyle = "black";
             Endabgabe.crc2.fillStyle = _color;

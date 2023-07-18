@@ -38,18 +38,21 @@ namespace Endabgabe {
     export let number: string = "3";
     export let randomSundae: number;
     export let queueLength: number;
+    export let table: number = 0;
 
     let flavor: string = "";
-    let cream : boolean = false;
+    export let cream : boolean = false;
     let sprinkles : boolean = false;
     let sauce : string = "keine Soße";
     let price : number = 0;
     let currentPrice : string;
 
-    let iceball: Iceball = new Iceball();
-    let Whip: Cream = new Cream (570, 650);
-    let Sprinkles: Sprinkle = new Sprinkle ();
-    let droppedSauce: Sauce = new Sauce(570, 650)
+    export let iceball: Iceball = new Iceball();
+    export let Whip: Cream = new Cream ();
+    export let Sprinkles: Sprinkle = new Sprinkle ();
+    export let droppedSauce: Sauce = new Sauce(570, 650);
+    let ice: Icecream = new Icecream(400, 550);
+    // let ice2: Icecream = new Icecream(400, 550);
 
     let background: ImageData;
 
@@ -62,11 +65,7 @@ namespace Endabgabe {
         let button: HTMLButtonElement = <HTMLButtonElement>document.getElementById("btn");
         button.addEventListener("click", newRecipe);
 
-        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-        let sundae: string = await response.text();
-        data = JSON.parse(sundae);
-
-        generateNewSundae(data);
+        generateMenu();
 
         drawBackground();
         create();
@@ -74,6 +73,8 @@ namespace Endabgabe {
     }
 
     async function newRecipe(): Promise<void> {
+        refreshMenu(); 
+        
         let Title: HTMLInputElement = <HTMLInputElement>document.querySelector("#recipeTitle");
         let Flavor: HTMLInputElement = <HTMLInputElement>document.querySelector("#flavor");
         let Iceballs: HTMLInputElement = <HTMLInputElement>document.querySelector("#iceballs");
@@ -82,7 +83,8 @@ namespace Endabgabe {
         let Sprinkles: HTMLInputElement = <HTMLInputElement>document.querySelector("#sprinkles");
         let Price: HTMLInputElement = <HTMLInputElement>document.querySelector("#price");
 
-        let newSundae: Sundae = {
+        let newSundae: Sundae =
+        {
             title: Title.value,
             flavor: Flavor.value,
             iceballs: Iceballs.value,
@@ -94,7 +96,34 @@ namespace Endabgabe {
 
         let query = JSON.stringify(newSundae);
         await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=insert&collection=Recipes&data=" + query);
+
+        Title.value = "New Recipe";
+        Flavor.value = "Schokolade";
+        Iceballs.value = "0";
+        Cream.checked = false;
+        Sauce.value = "keine Soße";
+        Sprinkles.checked = false;
+        Price.value = "0";
     };
+
+async function generateMenu():Promise<void>{
+    let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
+        let sundae: string = await response.text();
+        data = JSON.parse(sundae);
+
+        generateNewSundae(data);
+}
+
+async function refreshMenu():Promise<void>{
+    let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
+    menu.remove();
+
+    let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
+    let sundae: string = await response.text();
+    data = JSON.parse(sundae);
+
+    generateNewSundae(data);
+} 
 
 function drawBackground(): void {
         let gradient: CanvasGradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
@@ -170,7 +199,7 @@ function drawRoundedRect(_x: number, _y: number, _width: number, _height: number
   crc2.restore();
 }
 
-function drawGlass(_x:number, _y:number){
+export function drawGlass(_x:number, _y:number){
     crc2.beginPath();
     crc2.arc(_x, _y, 20, 0, 2*Math.PI, true);
     crc2.fillStyle = "#e8ffff";
@@ -218,22 +247,42 @@ function create(): void{
 
 export function update():void {
     crc2.putImageData(background, 0, 0);
-    iceball.draw(color, number);
-    Whip.draw(); 
+    iceball.draw(color, number, 570, 670);
+    Whip.draw(570, 650); 
     droppedSauce.draw();
     Sprinkles.draw();
     drawPrice(630, 650);  
     for (let customer of customeri) {
         customer.draw(randomSundae);
         customer.move(1/100);
+        
         }
+        for (let customer of customeri){
+        
+        if (customer.activity == "served" ){
+        // let ice: Icecream = new Icecream (400, 550);
+        if (table == 1){
+        ice.velocity.set (-40, -80);
+        ice.draw("red");
+        ice.move(1/100);}}
+        // if (customer.activity == "eating"){
+        //     ice.velocity.set (0,0);
+        //     ice.draw("red");
+        //     ice.move (1/100);
+            
+        // }
+    }
+        // if (table == 2){
+        //     ice.velocity.set (-40, -80);
+        //     ice.draw("red");
+        //     ice.move(1/100);}
+    // }
 }
       
 function handleKeyevent(_event: { keyCode: number; }) {
     if (_event.keyCode == 49) {
         number = "1";
-        console.log(MenuList[0]);
-        
+        // console.log(MenuList[0]);
         }
     if (_event.keyCode == 50) {
         number = "2";
@@ -287,6 +336,9 @@ function handleClickevent(_event: MouseEvent): void {
     if (190 >= hotspot.x && hotspot.x >= 50 && 255 >= hotspot.y && hotspot.y >= 115){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 1;
+        table = 1;
+        // ice.draw("red");
+        // ice.move(1/100);
            finishedSundae(data);
         waitingCustomers.shift();
         for (let customer of waitingCustomers){
@@ -302,6 +354,7 @@ function handleClickevent(_event: MouseEvent): void {
     if (190 >= hotspot.x && hotspot.x >= 50 && 455 >= hotspot.y && hotspot.y >= 315){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 2;
+        table = 2;
         finishedSundae(data);
         waitingCustomers.shift();
         for (let customer of waitingCustomers){
@@ -347,7 +400,7 @@ function handleClickevent(_event: MouseEvent): void {
     if (100 >= hotspot.x && hotspot.x >= 30 && 652 >= hotspot.y && hotspot.y >= 617){
         if (Whip.state == false){
             Whip.state = true; 
-            cream  = true;
+            cream = true;
             return 
         }
         if (Whip.state == true){

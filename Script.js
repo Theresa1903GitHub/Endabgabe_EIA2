@@ -1,106 +1,19 @@
 "use strict";
 var Endabgabe;
 (function (Endabgabe) {
-    /*
-        Aufgabe: Endabgabe_Eisdealer
-        Name: Theresa Hauser
-        Matrikel: 272983
-        Datum: 03.07.23
-        Zusammenarbeit mit Pia Schwer
-        Quellen: Stack Overflow, Developer Mozilla, Inverted Classroom Jirka, Tasks aus EIA1&2
-        */
-    window.addEventListener("load", handleLoad);
     window.addEventListener("keydown", handleKeyevent);
     window.addEventListener("click", handleClickevent);
-    Endabgabe.customeri = [];
-    let recipe = [];
-    let data;
-    Endabgabe.queue = 600;
-    Endabgabe.waitingCustomers = [];
-    Endabgabe.color = "white";
-    Endabgabe.number = "3";
-    Endabgabe.table = 0;
     let flavor = "";
-    Endabgabe.cream = false;
+    let cream = false;
     let sprinkles = false;
     let sauce = "keine Soße";
     let price = 0;
     let currentPrice;
-    Endabgabe.iceball = new Endabgabe.Iceball();
-    Endabgabe.Whip = new Endabgabe.Cream();
-    Endabgabe.Sprinkles = new Endabgabe.Sprinkle();
-    Endabgabe.droppedSauce = new Endabgabe.Sauce(570, 650);
-    let ice = new Endabgabe.Icecream(400, 550);
-    // let ice2: Icecream = new Icecream(400, 550);
+    let iceball = new Endabgabe.Iceball();
+    let Whip = new Endabgabe.Cream(570, 650);
+    let Sprinkles = new Endabgabe.Sprinkle();
+    let droppedSauce = new Endabgabe.Sauce(570, 650);
     let background;
-    let golden = 0.62;
-    Endabgabe.canvas = document.querySelector("canvas");
-    Endabgabe.crc2 = Endabgabe.canvas.getContext("2d");
-    async function handleLoad() {
-        let button = document.getElementById("btn");
-        button.addEventListener("click", newRecipe);
-        generateMenu();
-        drawBackground();
-        create();
-        setInterval(update, 20);
-    }
-    async function newRecipe() {
-        refreshMenu();
-        let Title = document.querySelector("#recipeTitle");
-        let Flavor = document.querySelector("#flavor");
-        let Iceballs = document.querySelector("#iceballs");
-        let Cream = document.querySelector("#cream");
-        let Sauce = document.querySelector("#sauce");
-        let Sprinkles = document.querySelector("#sprinkles");
-        let Price = document.querySelector("#price");
-        let newSundae = {
-            title: Title.value,
-            flavor: Flavor.value,
-            iceballs: Iceballs.value,
-            cream: Cream.checked,
-            sauce: Sauce.value,
-            sprinkles: Sprinkles.checked,
-            price: Price.value
-        };
-        let query = JSON.stringify(newSundae);
-        await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=insert&collection=Recipes&data=" + query);
-        Title.value = "New Recipe";
-        Flavor.value = "Schokolade";
-        Iceballs.value = "0";
-        Cream.checked = false;
-        Sauce.value = "keine Soße";
-        Sprinkles.checked = false;
-        Price.value = "0";
-    }
-    ;
-    async function generateMenu() {
-        let response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-        let sundae = await response.text();
-        data = JSON.parse(sundae);
-        Endabgabe.generateNewSundae(data);
-    }
-    async function refreshMenu() {
-        let menu = document.getElementById("menu");
-        menu.remove();
-        let response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-        let sundae = await response.text();
-        data = JSON.parse(sundae);
-        Endabgabe.generateNewSundae(data);
-    }
-    function drawBackground() {
-        let gradient = Endabgabe.crc2.createLinearGradient(0, 0, 0, Endabgabe.crc2.canvas.height);
-        gradient.addColorStop(0, "HSL(100, 80%, 30%)");
-        gradient.addColorStop(0.2 * golden, "HSL(100, 80%, 30%)");
-        gradient.addColorStop(0.2 * golden + 0.000001, "grey");
-        gradient.addColorStop(1.3 * golden - 0.000001, "white");
-        gradient.addColorStop(1.3 * golden, "HSL(40, 30%, 50%)");
-        gradient.addColorStop(1, "HSL(40, 30%, 50%)");
-        Endabgabe.crc2.fillStyle = gradient;
-        Endabgabe.crc2.fillRect(0, 0, Endabgabe.crc2.canvas.width, Endabgabe.crc2.canvas.height);
-        drawIceCreamShop();
-        background = Endabgabe.crc2.getImageData(0, 0, Endabgabe.crc2.canvas.width, Endabgabe.crc2.canvas.height);
-    }
-    ;
     // Eisdiele zeichnen
     function drawIceCreamShop() {
         // Sahne
@@ -164,7 +77,6 @@ var Endabgabe;
         Endabgabe.crc2.stroke();
         Endabgabe.crc2.closePath();
     }
-    Endabgabe.drawGlass = drawGlass;
     ;
     function drawTable(_x, _y) {
         Endabgabe.crc2.save();
@@ -198,41 +110,21 @@ var Endabgabe;
     }
     function update() {
         Endabgabe.crc2.putImageData(background, 0, 0);
-        Endabgabe.iceball.draw(Endabgabe.color, Endabgabe.number, 570, 670);
-        Endabgabe.Whip.draw(570, 650);
-        Endabgabe.droppedSauce.draw();
-        Endabgabe.Sprinkles.draw();
+        iceball.draw(Endabgabe.color, Endabgabe.number);
+        Whip.draw();
+        droppedSauce.draw();
+        Sprinkles.draw();
         drawPrice(630, 650);
         for (let customer of Endabgabe.customeri) {
             customer.draw(Endabgabe.randomSundae);
             customer.move(1 / 100);
         }
-        for (let customer of Endabgabe.customeri) {
-            if (customer.activity == "served") {
-                // let ice: Icecream = new Icecream (400, 550);
-                if (Endabgabe.table == 1) {
-                    ice.velocity.set(-40, -80);
-                    ice.draw("red");
-                    ice.move(1 / 100);
-                }
-            }
-            // if (customer.activity == "eating"){
-            //     ice.velocity.set (0,0);
-            //     ice.draw("red");
-            //     ice.move (1/100);
-            // }
-        }
-        // if (table == 2){
-        //     ice.velocity.set (-40, -80);
-        //     ice.draw("red");
-        //     ice.move(1/100);}
-        // }
     }
     Endabgabe.update = update;
     function handleKeyevent(_event) {
         if (_event.keyCode == 49) {
             Endabgabe.number = "1";
-            // console.log(MenuList[0]);
+            console.log(Endabgabe.MenuList[0]);
         }
         if (_event.keyCode == 50) {
             Endabgabe.number = "2";
@@ -285,10 +177,7 @@ var Endabgabe;
         if (190 >= hotspot.x && hotspot.x >= 50 && 255 >= hotspot.y && hotspot.y >= 115) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 1;
-            Endabgabe.table = 1;
-            // ice.draw("red");
-            // ice.move(1/100);
-            finishedSundae(data);
+            Endabgabe.finishedSundae(Endabgabe.data);
             Endabgabe.waitingCustomers.shift();
             for (let customer of Endabgabe.waitingCustomers) {
                 customer.activity = "move";
@@ -304,8 +193,7 @@ var Endabgabe;
         if (190 >= hotspot.x && hotspot.x >= 50 && 455 >= hotspot.y && hotspot.y >= 315) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 2;
-            Endabgabe.table = 2;
-            finishedSundae(data);
+            Endabgabe.finishedSundae(Endabgabe.data);
             Endabgabe.waitingCustomers.shift();
             for (let customer of Endabgabe.waitingCustomers) {
                 customer.activity = "move";
@@ -321,7 +209,7 @@ var Endabgabe;
         if (670 >= hotspot.x && hotspot.x >= 530 && 255 >= hotspot.y && hotspot.y >= 115) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 3;
-            finishedSundae(data);
+            Endabgabe.finishedSundae(Endabgabe.data);
             Endabgabe.waitingCustomers.shift();
             for (let customer of Endabgabe.waitingCustomers) {
                 customer.activity = "move";
@@ -337,7 +225,7 @@ var Endabgabe;
         if (670 >= hotspot.x && hotspot.x >= 530 && 455 >= hotspot.y && hotspot.y >= 315) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 4;
-            finishedSundae(data);
+            Endabgabe.finishedSundae(Endabgabe.data);
             Endabgabe.waitingCustomers.shift();
             for (let customer of Endabgabe.waitingCustomers) {
                 customer.activity = "move";
@@ -351,103 +239,57 @@ var Endabgabe;
             }
         }
         if (100 >= hotspot.x && hotspot.x >= 30 && 652 >= hotspot.y && hotspot.y >= 617) {
-            if (Endabgabe.Whip.state == false) {
-                Endabgabe.Whip.state = true;
-                Endabgabe.cream = true;
+            if (Whip.state == false) {
+                Whip.state = true;
+                cream = true;
                 return;
             }
-            if (Endabgabe.Whip.state == true) {
-                Endabgabe.Whip.state = false;
-                Endabgabe.cream = false;
+            if (Whip.state == true) {
+                Whip.state = false;
+                cream = false;
                 return;
             }
         }
         if (100 >= hotspot.x && hotspot.x >= 30 && 695 >= hotspot.y && hotspot.y >= 660) {
-            if (Endabgabe.Sprinkles.state == false) {
-                Endabgabe.Sprinkles.state = true;
-                console.log(Endabgabe.Sprinkles.state);
+            if (Sprinkles.state == false) {
+                Sprinkles.state = true;
+                console.log(Sprinkles.state);
                 sprinkles = true;
                 return;
             }
-            if (Endabgabe.Sprinkles.state == true) {
-                Endabgabe.Sprinkles.state = false;
-                console.log(Endabgabe.Sprinkles.state);
+            if (Sprinkles.state == true) {
+                Sprinkles.state = false;
+                console.log(Sprinkles.state);
                 sprinkles = false;
                 return;
             }
         }
         if (155 > hotspot.x && hotspot.x > 125 && 655 >= hotspot.y && hotspot.y >= 625) {
-            Endabgabe.droppedSauce.color = "#332200";
-            if (Endabgabe.droppedSauce.state == true) {
-                Endabgabe.droppedSauce.state = false;
+            droppedSauce.color = "#332200";
+            if (droppedSauce.state == true) {
+                droppedSauce.state = false;
                 sauce = "keine Soße";
                 return;
             }
-            if (Endabgabe.droppedSauce.state == false) {
-                Endabgabe.droppedSauce.state = true;
+            if (droppedSauce.state == false) {
+                droppedSauce.state = true;
                 sauce = "Schokosoße";
                 return;
             }
         }
         if (155 >= hotspot.x && hotspot.x >= 125 && 677 >= hotspot.y && hotspot.y >= 662) {
-            if (Endabgabe.droppedSauce.state == true) {
-                Endabgabe.droppedSauce.state = false;
+            if (droppedSauce.state == true) {
+                droppedSauce.state = false;
                 sauce = "keine Soße";
                 return;
             }
-            if (Endabgabe.droppedSauce.state == false) {
-                Endabgabe.droppedSauce.color = "red";
-                Endabgabe.droppedSauce.state = true;
+            if (droppedSauce.state == false) {
+                droppedSauce.color = "red";
+                droppedSauce.state = true;
                 sauce = "Erdbeersoße";
                 return;
             }
         }
     }
-    function finishedSundae(_data) {
-        let orderedNumber = Endabgabe.waitingCustomers[0].appointment;
-        for (let i of Endabgabe.Menu) {
-            let orderTitle = _data.data[i].title;
-            let orderFlavor = _data.data[i].flavor;
-            let orderIceballs = _data.data[i].iceballs;
-            let orderCream = _data.data[i].cream;
-            let orderSauce = _data.data[i].sauce;
-            let orderSprinkles = _data.data[i].sprinkles;
-            let orderPrice = _data.data[i].price;
-            recipe.push(orderTitle, orderFlavor, orderIceballs, orderCream, orderSauce, orderSprinkles, orderPrice);
-        }
-        console.log(recipe[orderedNumber * 7]);
-        console.log(recipe[orderedNumber * 7 + 1]);
-        console.log(recipe[orderedNumber * 7 + 2]);
-        console.log(recipe[orderedNumber * 7 + 3]);
-        console.log(recipe[orderedNumber * 7 + 4]);
-        console.log(recipe[orderedNumber * 7 + 5]);
-        console.log(recipe[orderedNumber * 7 + 6]);
-        let mySundae = {
-            title: recipe[orderedNumber * 7],
-            flavor: flavor,
-            iceballs: Endabgabe.number,
-            cream: Endabgabe.cream,
-            sauce: sauce,
-            sprinkles: sprinkles,
-            price: currentPrice
-        };
-        console.log(mySundae);
-        if (mySundae.title == recipe[orderedNumber * 7] &&
-            mySundae.flavor == recipe[orderedNumber * 7 + 1] &&
-            mySundae.iceballs == recipe[orderedNumber * 7 + 2] &&
-            mySundae.cream == recipe[orderedNumber * 7 + 3] &&
-            mySundae.sauce == recipe[orderedNumber * 7 + 4] &&
-            mySundae.sprinkles == recipe[orderedNumber * 7 + 5] &&
-            mySundae.price == recipe[orderedNumber * 7 + 6]) {
-            // console.log("passt");
-            Endabgabe.waitingCustomers[0].status = "happy";
-            return true;
-        }
-        else {
-            // console.log("passt nicht");
-            Endabgabe.waitingCustomers[0].status = "angry";
-            return false;
-        }
-    }
 })(Endabgabe || (Endabgabe = {}));
-//# sourceMappingURL=Menu.js.map
+//# sourceMappingURL=Script.js.map

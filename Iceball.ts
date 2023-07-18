@@ -5,14 +5,14 @@ namespace Endabgabe {
         number: number;
 
         public constructor (){
-            this.position = new Vector (570, 670);
+            // this.position = ;
             // this.color = _color;
             // this.number = _number;
         }
 
-        public draw(_color: string, _number: string): void{
+        public draw(_color: string, _number: string, _positionX: number, _positionY: number): void{
                 crc2.save();
-                crc2.translate(this.position.x, this.position.y);
+                crc2.translate(_positionX, _positionY);
                 crc2.lineWidth = 0.3; 
                 crc2.strokeStyle = "black"
                 crc2.fillStyle = _color;

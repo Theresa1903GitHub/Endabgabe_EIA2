@@ -6,18 +6,18 @@ namespace Endabgabe {
         size: number;
         state: boolean;
 
-        public constructor (_positionX: number, _positionY: number){
-            this.position = new Vector (_positionX, _positionY);
+        public constructor (){
+            // this.position = new Vector (_positionX, _positionY);
             this.color = "white";
             this.size = 1.2;
             this.state = false;
 
         }
     
-        public draw (): void {
+        public draw ( _positionX: number, _positionY: number): void {
             if (this.state == true){
                 crc2.save();     
-                crc2.translate(this.position.x, this.position.y);
+                crc2.translate(_positionX, _positionY);
                 crc2.beginPath();
                 crc2.moveTo(0, 0);
                 crc2.lineTo(5*this.size, 10*this.size);
