@@ -73,7 +73,6 @@ namespace Endabgabe {
     }
 
     async function newRecipe(): Promise<void> {
-        refreshMenu(); 
         
         let Title: HTMLInputElement = <HTMLInputElement>document.querySelector("#recipeTitle");
         let Flavor: HTMLInputElement = <HTMLInputElement>document.querySelector("#flavor");
@@ -104,10 +103,12 @@ namespace Endabgabe {
         Sauce.value = "keine Soße";
         Sprinkles.checked = false;
         Price.value = "0";
+
+        refreshMenu(); 
     };
 
 async function generateMenu():Promise<void>{
-    let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
+        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
         let sundae: string = await response.text();
         data = JSON.parse(sundae);
 
@@ -118,11 +119,7 @@ async function refreshMenu():Promise<void>{
     let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
     menu.remove();
 
-    let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-    let sundae: string = await response.text();
-    data = JSON.parse(sundae);
-
-    generateNewSundae(data);
+    generateMenu();
 } 
 
 function drawBackground(): void {

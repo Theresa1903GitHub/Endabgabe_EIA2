@@ -45,7 +45,6 @@ var Endabgabe;
         setInterval(update, 20);
     }
     async function newRecipe() {
-        refreshMenu();
         let Title = document.querySelector("#recipeTitle");
         let Flavor = document.querySelector("#flavor");
         let Iceballs = document.querySelector("#iceballs");
@@ -71,6 +70,7 @@ var Endabgabe;
         Sauce.value = "keine Soße";
         Sprinkles.checked = false;
         Price.value = "0";
+        refreshMenu();
     }
     ;
     async function generateMenu() {
@@ -82,10 +82,7 @@ var Endabgabe;
     async function refreshMenu() {
         let menu = document.getElementById("menu");
         menu.remove();
-        let response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-        let sundae = await response.text();
-        data = JSON.parse(sundae);
-        Endabgabe.generateNewSundae(data);
+        generateMenu();
     }
     function drawBackground() {
         let gradient = Endabgabe.crc2.createLinearGradient(0, 0, 0, Endabgabe.crc2.canvas.height);
