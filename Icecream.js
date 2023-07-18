@@ -7,10 +7,11 @@ var Endabgabe;
         state;
         iceballs;
         color;
+        sauce;
         sauceColor;
         whip;
         sprinkels;
-        constructor(_x, _y, _number, _flavor, _saucecolor, _creamstate, _sprinkles) {
+        constructor(_x, _y, _number, _flavor, _sauce, _saucecolor, _creamstate, _sprinkles) {
             this.position = new Endabgabe.Vector(_x, _y);
             this.velocity = new Endabgabe.Vector(0, 0);
             this.state = "invisible";
@@ -24,6 +25,10 @@ var Endabgabe;
             }
             if (_sprinkles == true) {
                 this.sprinkels = true;
+            }
+            if (_sauce == true) {
+                this.sauce = true;
+                this.sauceColor = _saucecolor;
             }
         }
         draw(_strokeColor) {
@@ -44,6 +49,8 @@ var Endabgabe;
                 Whip.draw(this.position.x, this.position.y - 20);
                 let Sprinkles = new Endabgabe.Sprinkle(this.sprinkels);
                 Sprinkles.draw(this.position.x, this.position.y);
+                let droppedSauce = new Endabgabe.Sauce(this.sauce);
+                droppedSauce.draw(this.sauceColor, this.position.x, this.position.y - 20);
                 // droppedSauce.draw(this.sauceColor, this.position.x, this.position.y);
             }
             else {

@@ -5,10 +5,10 @@ var Endabgabe;
         position;
         color;
         state;
-        constructor() {
+        constructor(_state) {
             // this.position = new Vector (_positionX, _positionY);
             // this.color = "#332200"
-            this.state = false;
+            this.state = _state;
         }
         draw(_color, _positionX, _positionY) {
             if (this.state == true) {

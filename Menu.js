@@ -25,13 +25,14 @@ var Endabgabe;
     let flavor = "";
     Endabgabe.cream = false;
     Endabgabe.sprinkles = false;
+    Endabgabe.sauceBoolean = false;
     let sauce = "keine Soße";
     let price = 0;
     let currentPrice;
     Endabgabe.iceball = new Endabgabe.Iceball();
     Endabgabe.Whip = new Endabgabe.Cream(Endabgabe.cream);
     Endabgabe.Sprinkles = new Endabgabe.Sprinkle(Endabgabe.sprinkles);
-    Endabgabe.droppedSauce = new Endabgabe.Sauce();
+    Endabgabe.droppedSauce = new Endabgabe.Sauce(Endabgabe.sauceBoolean);
     let background;
     let golden = 0.62;
     Endabgabe.canvas = document.querySelector("canvas");
@@ -278,7 +279,7 @@ var Endabgabe;
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 1;
             Endabgabe.table = 1;
-            let ice = new Endabgabe.Icecream(350, 530, Endabgabe.number, Endabgabe.color, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
+            let ice = new Endabgabe.Icecream(350, 530, Endabgabe.number, Endabgabe.color, Endabgabe.sauceBoolean, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
             ice.velocity.set(-40, -80);
             ice.state = "visible";
             icecreme.push(ice);
@@ -299,7 +300,7 @@ var Endabgabe;
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 2;
             Endabgabe.table = 2;
-            let ice = new Endabgabe.Icecream(350, 530, Endabgabe.number, Endabgabe.color, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
+            let ice = new Endabgabe.Icecream(350, 530, Endabgabe.number, Endabgabe.color, Endabgabe.sauceBoolean, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
             ice.velocity.set(-70, -40);
             ice.state = "visible";
             icecreme.push(ice);
@@ -319,7 +320,7 @@ var Endabgabe;
         if (670 >= hotspot.x && hotspot.x >= 530 && 255 >= hotspot.y && hotspot.y >= 115) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 3;
-            let ice = new Endabgabe.Icecream(450, 510, Endabgabe.number, Endabgabe.color, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
+            let ice = new Endabgabe.Icecream(450, 510, Endabgabe.number, Endabgabe.color, Endabgabe.sauceBoolean, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
             ice.velocity.set(40, -80);
             ice.state = "visible";
             icecreme.push(ice);
@@ -340,7 +341,7 @@ var Endabgabe;
         if (670 >= hotspot.x && hotspot.x >= 530 && 455 >= hotspot.y && hotspot.y >= 315) {
             Endabgabe.waitingCustomers[0].activity = "served";
             Endabgabe.waitingCustomers[0].table = 4;
-            let ice = new Endabgabe.Icecream(450, 510, Endabgabe.number, Endabgabe.color, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
+            let ice = new Endabgabe.Icecream(450, 510, Endabgabe.number, Endabgabe.color, Endabgabe.sauceBoolean, Endabgabe.saucecolor, Endabgabe.cream, Endabgabe.sprinkles);
             ice.velocity.set(70, -40);
             ice.state = "visible";
             icecreme.push(ice);
@@ -384,11 +385,13 @@ var Endabgabe;
         if (155 > hotspot.x && hotspot.x > 125 && 655 >= hotspot.y && hotspot.y >= 625) {
             if (Endabgabe.droppedSauce.state == true) {
                 Endabgabe.droppedSauce.state = false;
+                Endabgabe.sauceBoolean = false;
                 Endabgabe.saucecolor = "";
                 sauce = "keine Soße";
                 return;
             }
             if (Endabgabe.droppedSauce.state == false) {
+                Endabgabe.sauceBoolean = true;
                 Endabgabe.saucecolor = "#332200";
                 Endabgabe.droppedSauce.state = true;
                 sauce = "Schokosoße";
@@ -398,12 +401,14 @@ var Endabgabe;
         if (155 >= hotspot.x && hotspot.x >= 125 && 677 >= hotspot.y && hotspot.y >= 662) {
             if (Endabgabe.droppedSauce.state == true) {
                 Endabgabe.droppedSauce.state = false;
+                Endabgabe.sauceBoolean = false;
                 Endabgabe.saucecolor = "";
                 sauce = "keine Soße";
                 return;
             }
             if (Endabgabe.droppedSauce.state == false) {
                 Endabgabe.saucecolor = "red";
+                Endabgabe.sauceBoolean = true;
                 Endabgabe.droppedSauce.state = true;
                 sauce = "Erdbeersoße";
                 return;

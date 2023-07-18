@@ -45,6 +45,7 @@ namespace Endabgabe {
     let flavor: string = "";
     export let cream : boolean = false;
     export let sprinkles : boolean = false;
+    export let sauceBoolean : boolean = false;
     let sauce : string = "keine Soße";
     let price : number = 0;
     let currentPrice : string;
@@ -52,7 +53,7 @@ namespace Endabgabe {
     export let iceball: Iceball = new Iceball();
     export let Whip: Cream = new Cream (cream);
     export let Sprinkles: Sprinkle = new Sprinkle (sprinkles);
-    export let droppedSauce: Sauce = new Sauce();
+    export let droppedSauce: Sauce = new Sauce(sauceBoolean);
   
     let background: ImageData;
 
@@ -332,7 +333,7 @@ function handleClickevent(_event: MouseEvent): void {
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 1;
         table = 1;
-        let ice : Icecream = new Icecream (350, 530, number, color, saucecolor, cream, sprinkles);
+        let ice : Icecream = new Icecream (350, 530, number, color, sauceBoolean, saucecolor, cream, sprinkles);
         ice.velocity.set(-40,-80);
         ice.state = "visible";
         icecreme.push(ice);
@@ -352,7 +353,7 @@ function handleClickevent(_event: MouseEvent): void {
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 2;
         table = 2;
-        let ice : Icecream = new Icecream (350, 530,  number, color, saucecolor, cream, sprinkles);
+        let ice : Icecream = new Icecream (350, 530,  number, color, sauceBoolean, saucecolor, cream, sprinkles);
         ice.velocity.set(-70,-40);
         ice.state = "visible";
         icecreme.push(ice);
@@ -371,7 +372,7 @@ function handleClickevent(_event: MouseEvent): void {
     if (670 >= hotspot.x && hotspot.x >= 530 && 255 >= hotspot.y && hotspot.y >= 115){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 3;
-        let ice : Icecream = new Icecream (450, 510,  number, color, saucecolor, cream, sprinkles);
+        let ice : Icecream = new Icecream (450, 510,  number, color, sauceBoolean, saucecolor, cream, sprinkles);
         ice.velocity.set(40,-80);
         ice.state = "visible";
         icecreme.push(ice);
@@ -392,7 +393,7 @@ function handleClickevent(_event: MouseEvent): void {
     if (670 >= hotspot.x && hotspot.x >= 530 && 455 >= hotspot.y && hotspot.y >= 315){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 4;
-        let ice : Icecream = new Icecream (450, 510, number, color, saucecolor, cream, sprinkles);
+        let ice : Icecream = new Icecream (450, 510, number, color, sauceBoolean, saucecolor, cream, sprinkles);
         ice.velocity.set(70,-40);
         ice.state = "visible";
         icecreme.push(ice);
@@ -435,10 +436,12 @@ function handleClickevent(_event: MouseEvent): void {
     if (155 > hotspot.x && hotspot.x > 125 && 655 >= hotspot.y && hotspot.y >= 625){
         if (droppedSauce.state == true){
             droppedSauce.state = false;
+            sauceBoolean = false;
             saucecolor = "";
             sauce = "keine Soße";
             return}
         if (droppedSauce.state == false){
+            sauceBoolean = true;
             saucecolor = "#332200";
             droppedSauce.state = true;
             sauce = "Schokosoße";
@@ -447,11 +450,13 @@ function handleClickevent(_event: MouseEvent): void {
     if (155 >= hotspot.x && hotspot.x >= 125 && 677 >= hotspot.y && hotspot.y >= 662){
         if (droppedSauce.state == true){
             droppedSauce.state = false;
+            sauceBoolean = false;
             saucecolor = "";
             sauce = "keine Soße";
             return}
         if (droppedSauce.state == false){
             saucecolor = "red";
+            sauceBoolean = true;
             droppedSauce.state = true;
             sauce = "Erdbeersoße";
             return}

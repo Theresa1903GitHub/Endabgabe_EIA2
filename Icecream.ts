@@ -5,12 +5,13 @@ namespace Endabgabe {
         state: string;
         iceballs: string;
         color: string;
+        sauce:boolean;
         sauceColor: string;
         whip: boolean;
         sprinkels: boolean;
         
 
-        public constructor (_x:number, _y:number, _number:string, _flavor: string, _saucecolor: string, _creamstate: boolean, _sprinkles: boolean){
+        public constructor (_x:number, _y:number, _number:string, _flavor: string, _sauce: boolean, _saucecolor: string, _creamstate: boolean, _sprinkles: boolean){
             this.position = new Vector (_x, _y);
             this.velocity = new Vector (0, 0); 
             this.state = "invisible";
@@ -23,6 +24,10 @@ namespace Endabgabe {
             }
             if (_sprinkles == true){
                 this.sprinkels = true;
+            }
+            if (_sauce == true){
+                this.sauce = true;
+                this.sauceColor = _saucecolor;
             }
         }
 
@@ -46,6 +51,8 @@ namespace Endabgabe {
                 Whip.draw(this.position.x, this.position.y-20); 
                 let Sprinkles: Sprinkle = new Sprinkle (this.sprinkels);
                 Sprinkles.draw(this.position.x, this.position.y);
+                let droppedSauce: Sauce = new Sauce (this.sauce);
+                droppedSauce.draw(this.sauceColor,this.position.x, this.position.y-20);
                 // droppedSauce.draw(this.sauceColor, this.position.x, this.position.y);
 
 

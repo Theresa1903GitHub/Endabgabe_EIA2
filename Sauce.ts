@@ -5,10 +5,10 @@ namespace Endabgabe {
         color: string;
         state: boolean;
 
-        public constructor (){
+        public constructor (_state: boolean){
             // this.position = new Vector (_positionX, _positionY);
             // this.color = "#332200"
-            this.state = false;
+            this.state = _state;
         }
     
         public draw (_color: string, _positionX: number, _positionY: number): void {
