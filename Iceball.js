@@ -5,11 +5,7 @@ var Endabgabe;
         position;
         color;
         number;
-        constructor() {
-            // this.position = ;
-            // this.color = _color;
-            // this.number = _number;
-        }
+        constructor() { }
         draw(_color, _number, _positionX, _positionY) {
             Endabgabe.crc2.save();
             Endabgabe.crc2.translate(_positionX, _positionY);

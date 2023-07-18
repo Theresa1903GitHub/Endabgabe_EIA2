@@ -6,17 +6,17 @@ namespace Endabgabe {
         size: number;
         state: boolean;
 
-        public constructor (){
-            this.position = new Vector (570, 670);
+        public constructor (_state: boolean){
+            // this.position = new Vector (570, 670);
             this.color = "#442200";
             this.size = 1.2;
-            this.state = false;
+            this.state = _state;
         }
     
-        public draw (): void {
+        public draw ( _positionX: number, _positionY: number): void {
             if (this.state == true){
                 crc2.save();     
-                crc2.translate(this.position.x, this.position.y);
+                crc2.translate(_positionX, _positionY);
                 crc2.beginPath();
                 crc2.ellipse(0, 0, 1, 3, 0, 0, 2*Math.PI, true);
                 crc2.moveTo(-3,10);

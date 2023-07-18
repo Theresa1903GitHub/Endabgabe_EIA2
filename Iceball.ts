@@ -4,11 +4,7 @@ namespace Endabgabe {
         color: string;
         number: number;
 
-        public constructor (){
-            // this.position = ;
-            // this.color = _color;
-            // this.number = _number;
-        }
+        public constructor (){}
 
         public draw(_color: string, _number: string, _positionX: number, _positionY: number): void{
                 crc2.save();

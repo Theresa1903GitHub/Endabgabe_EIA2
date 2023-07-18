@@ -10,7 +10,8 @@ namespace Endabgabe {
         }
 
         for (let i of Menu) {
-            let newSundaeDiv: HTMLFormElement = document.createElement("form");
+            let newSundaeDiv: HTMLFormElement = document.createElement("form")
+            newSundaeDiv.id = "Sundae";
             newSundaeDiv.classList.add("newSundae");
             let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
             menu.classList.add("menu");

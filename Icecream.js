@@ -3,41 +3,54 @@ var Endabgabe;
 (function (Endabgabe) {
     class Icecream {
         position;
-        iceballs;
-        color;
-        strokeColor;
         velocity;
         state;
-        constructor(_x, _y) {
+        iceballs;
+        color;
+        sauceColor;
+        whip;
+        sprinkels;
+        constructor(_x, _y, _number, _flavor, _saucecolor, _creamstate, _sprinkles) {
             this.position = new Endabgabe.Vector(_x, _y);
             this.velocity = new Endabgabe.Vector(0, 0);
             this.state = "invisible";
+            this.iceballs = _number;
+            this.color = _flavor;
+            if (Endabgabe.droppedSauce.state == true) {
+                this.sauceColor = _saucecolor;
+            }
+            if (_creamstate == true) {
+                this.whip = true;
+            }
+            if (_sprinkles == true) {
+                this.sprinkels = true;
+            }
         }
         draw(_strokeColor) {
-            Endabgabe.crc2.save();
-            Endabgabe.crc2.translate(this.position.x, this.position.y);
-            Endabgabe.crc2.beginPath();
-            Endabgabe.crc2.arc(0, 0, 20, 0, 2 * Math.PI, true);
-            Endabgabe.crc2.fillStyle = "#e8ffff";
-            Endabgabe.crc2.strokeStyle = "#d0faf9";
-            Endabgabe.crc2.fill();
-            Endabgabe.crc2.stroke();
-            Endabgabe.crc2.closePath();
-            Endabgabe.crc2.restore();
-            Endabgabe.iceball.draw(Endabgabe.color, Endabgabe.number, this.position.x, this.position.y);
-            if (Endabgabe.cream == true) {
-                Endabgabe.Whip.draw(this.position.x, this.position.y - 20);
+            if (this.state == "visible") {
+                Endabgabe.crc2.save();
+                Endabgabe.crc2.translate(this.position.x, this.position.y);
+                Endabgabe.crc2.beginPath();
+                Endabgabe.crc2.arc(0, 0, 20, 0, 2 * Math.PI, true);
+                Endabgabe.crc2.fillStyle = "#e8ffff";
+                Endabgabe.crc2.strokeStyle = "#d0faf9";
+                Endabgabe.crc2.fill();
+                Endabgabe.crc2.stroke();
+                Endabgabe.crc2.closePath();
+                Endabgabe.crc2.restore();
+                let iceball = new Endabgabe.Iceball();
+                iceball.draw(this.color, this.iceballs, this.position.x, this.position.y);
+                let Whip = new Endabgabe.Cream(this.whip);
+                Whip.draw(this.position.x, this.position.y - 20);
+                let Sprinkles = new Endabgabe.Sprinkle(this.sprinkels);
+                Sprinkles.draw(this.position.x, this.position.y);
+                // droppedSauce.draw(this.sauceColor, this.position.x, this.position.y);
             }
-            Endabgabe.droppedSauce.draw();
-            Endabgabe.Sprinkles.draw();
+            else {
+                console.log("");
+            }
         }
         move(_timeslice) {
-            // if (table == 1){
-            //     this.velocity.set (-40, -80);
-            // }
-            // if (table == 2){
-            //     this.velocity.set (-40, -40);
-            // }
             let offset = new Endabgabe.Vector(this.velocity.x, this.velocity.y);
             offset.scale(_timeslice);
             this.position.add(offset);

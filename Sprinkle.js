@@ -6,16 +6,16 @@ var Endabgabe;
         color;
         size;
         state;
-        constructor() {
-            this.position = new Endabgabe.Vector(570, 670);
+        constructor(_state) {
+            // this.position = new Vector (570, 670);
             this.color = "#442200";
             this.size = 1.2;
-            this.state = false;
+            this.state = _state;
         }
-        draw() {
+        draw(_positionX, _positionY) {
             if (this.state == true) {
                 Endabgabe.crc2.save();
-                Endabgabe.crc2.translate(this.position.x, this.position.y);
+                Endabgabe.crc2.translate(_positionX, _positionY);
                 Endabgabe.crc2.beginPath();
                 Endabgabe.crc2.ellipse(0, 0, 1, 3, 0, 0, 2 * Math.PI, true);
                 Endabgabe.crc2.moveTo(-3, 10);

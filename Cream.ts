@@ -6,11 +6,11 @@ namespace Endabgabe {
         size: number;
         state: boolean;
 
-        public constructor (){
+        public constructor (_state:boolean){
             // this.position = new Vector (_positionX, _positionY);
             this.color = "white";
             this.size = 1.2;
-            this.state = false;
+            this.state = _state;
 
         }
     

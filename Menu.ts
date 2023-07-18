@@ -14,6 +14,7 @@ namespace Endabgabe {
 
     export let customeri: Customer [] = [];
     let recipe: any [] = [];
+    let icecreme: Icecream [] = [];
 
     export interface Sundae {
         title: string;
@@ -35,6 +36,7 @@ namespace Endabgabe {
     export let waitingCustomers: Customer[] = [];
    
     export let color: string = "white";
+    export let saucecolor: string = "red";
     export let number: string = "3";
     export let randomSundae: number;
     export let queueLength: number;
@@ -42,18 +44,16 @@ namespace Endabgabe {
 
     let flavor: string = "";
     export let cream : boolean = false;
-    let sprinkles : boolean = false;
+    export let sprinkles : boolean = false;
     let sauce : string = "keine Soße";
     let price : number = 0;
     let currentPrice : string;
 
     export let iceball: Iceball = new Iceball();
-    export let Whip: Cream = new Cream ();
-    export let Sprinkles: Sprinkle = new Sprinkle ();
-    export let droppedSauce: Sauce = new Sauce(570, 650);
-    let ice: Icecream = new Icecream(400, 550);
-    // let ice2: Icecream = new Icecream(400, 550);
-
+    export let Whip: Cream = new Cream (cream);
+    export let Sprinkles: Sprinkle = new Sprinkle (sprinkles);
+    export let droppedSauce: Sauce = new Sauce();
+  
     let background: ImageData;
 
     let golden: number = 0.62;
@@ -65,7 +65,11 @@ namespace Endabgabe {
         let button: HTMLButtonElement = <HTMLButtonElement>document.getElementById("btn");
         button.addEventListener("click", newRecipe);
 
-        generateMenu();
+        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
+        let sundae: string = await response.text();
+        data = JSON.parse(sundae);
+
+        generateNewSundae(data);
 
         drawBackground();
         create();
@@ -104,7 +108,7 @@ namespace Endabgabe {
         Sprinkles.checked = false;
         Price.value = "0";
 
-        refreshMenu(); 
+        // refreshMenu(); 
     };
 
 async function generateMenu():Promise<void>{
@@ -116,10 +120,13 @@ async function generateMenu():Promise<void>{
 }
 
 async function refreshMenu():Promise<void>{
-    let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
-    menu.remove();
+    // let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
+    
+    // for (let j= menu.childNodes.length; j>=0; j-- ) {
+    //     menu.removeChild(menu.childNodes[j]);
+    // }
 
-    generateMenu();
+    // generateMenu();
 } 
 
 function drawBackground(): void {
@@ -240,46 +247,42 @@ function create(): void{
         let customer: Customer = new Customer(randomY, randomSundae);
         
         customeri.push(customer); 
-        };}
+        console.log(randomSundae);
+        
+        };
+    }
 
 export function update():void {
     crc2.putImageData(background, 0, 0);
     iceball.draw(color, number, 570, 670);
     Whip.draw(570, 650); 
-    droppedSauce.draw();
-    Sprinkles.draw();
+    droppedSauce.draw(saucecolor, 570, 650);
+    Sprinkles.draw(570, 670);
     drawPrice(630, 650);  
     for (let customer of customeri) {
         customer.draw(randomSundae);
         customer.move(1/100);
-        
         }
-        for (let customer of customeri){
-        
-        if (customer.activity == "served" ){
-        // let ice: Icecream = new Icecream (400, 550);
-        if (table == 1){
-        ice.velocity.set (-40, -80);
+    for (let ice of icecreme){
         ice.draw("red");
-        ice.move(1/100);}}
-        // if (customer.activity == "eating"){
-        //     ice.velocity.set (0,0);
-        //     ice.draw("red");
-        //     ice.move (1/100);
-            
-        // }
+        ice.move(1/100);
+        if (ice.position.x <= 170 || ice.position.x >= 590){
+            ice.velocity.set(0,0);
+            setTimeout(() => {
+                ice.state = "invisible";
+              }, 6000);
     }
         // if (table == 2){
         //     ice.velocity.set (-40, -80);
         //     ice.draw("red");
         //     ice.move(1/100);}
     // }
-}
+}}
+
       
 function handleKeyevent(_event: { keyCode: number; }) {
     if (_event.keyCode == 49) {
         number = "1";
-        // console.log(MenuList[0]);
         }
     if (_event.keyCode == 50) {
         number = "2";
@@ -308,34 +311,31 @@ function handleClickevent(_event: MouseEvent): void {
     if (220 >= hotspot.x && hotspot.x >= 170 && 697 >= hotspot.y && hotspot.y >= 617){
         color = "#9d6540";
         flavor = "Schokolade";  
-        console.log(flavor);
     }
     if (285 >= hotspot.x && hotspot.x >= 235 && 697 >= hotspot.y && hotspot.y >= 617){
         color = "#fb7969";  
         flavor = "Erdbeere";
-        console.log(flavor);
     }
     if (350 >= hotspot.x && hotspot.x >= 300 && 697 >= hotspot.y && hotspot.y >= 617){
         color = "#f9f3ef"; 
         flavor = "Vanille"; 
-        console.log(flavor);
     }
     if (445 >= hotspot.x && hotspot.x >= 365 && 697 >= hotspot.y && hotspot.y >= 617){
         color = "#fde1b4";  
         flavor = "Melone";
-        console.log(flavor);
     }
     if (510 >= hotspot.x && hotspot.x >= 430 && 697 >= hotspot.y && hotspot.y >= 617){
         color = "#b4fdbc"; 
-        flavor = "Pistazie";
-        console.log(flavor);   
+        flavor = "Pistazie";  
     }
     if (190 >= hotspot.x && hotspot.x >= 50 && 255 >= hotspot.y && hotspot.y >= 115){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 1;
         table = 1;
-        // ice.draw("red");
-        // ice.move(1/100);
+        let ice : Icecream = new Icecream (350, 530, number, color, saucecolor, cream, sprinkles);
+        ice.velocity.set(-40,-80);
+        ice.state = "visible";
+        icecreme.push(ice);
            finishedSundae(data);
         waitingCustomers.shift();
         for (let customer of waitingCustomers){
@@ -352,6 +352,10 @@ function handleClickevent(_event: MouseEvent): void {
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 2;
         table = 2;
+        let ice : Icecream = new Icecream (350, 530,  number, color, saucecolor, cream, sprinkles);
+        ice.velocity.set(-70,-40);
+        ice.state = "visible";
+        icecreme.push(ice);
         finishedSundae(data);
         waitingCustomers.shift();
         for (let customer of waitingCustomers){
@@ -367,6 +371,12 @@ function handleClickevent(_event: MouseEvent): void {
     if (670 >= hotspot.x && hotspot.x >= 530 && 255 >= hotspot.y && hotspot.y >= 115){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 3;
+        let ice : Icecream = new Icecream (450, 510,  number, color, saucecolor, cream, sprinkles);
+        ice.velocity.set(40,-80);
+        ice.state = "visible";
+        icecreme.push(ice);
+        console.log(icecreme);
+        
            finishedSundae(data);
         waitingCustomers.shift();
         for (let customer of waitingCustomers){
@@ -382,6 +392,10 @@ function handleClickevent(_event: MouseEvent): void {
     if (670 >= hotspot.x && hotspot.x >= 530 && 455 >= hotspot.y && hotspot.y >= 315){
         waitingCustomers[0].activity = "served";
         waitingCustomers[0].table = 4;
+        let ice : Icecream = new Icecream (450, 510, number, color, saucecolor, cream, sprinkles);
+        ice.velocity.set(70,-40);
+        ice.state = "visible";
+        icecreme.push(ice);
         finishedSundae(data);
         waitingCustomers.shift();
         for (let customer of waitingCustomers){
@@ -409,25 +423,23 @@ function handleClickevent(_event: MouseEvent): void {
     if (100 >= hotspot.x && hotspot.x >= 30 && 695 >= hotspot.y && hotspot.y >= 660){
         if (Sprinkles.state == false){
             Sprinkles.state = true; 
-            console.log(Sprinkles.state);
             sprinkles = true;
             return 
         }
         if (Sprinkles.state == true){
             Sprinkles.state = false;
-            console.log(Sprinkles.state);
-            
             sprinkles = false;
             return
         }
     }
     if (155 > hotspot.x && hotspot.x > 125 && 655 >= hotspot.y && hotspot.y >= 625){
-        droppedSauce.color = "#332200";
         if (droppedSauce.state == true){
             droppedSauce.state = false;
+            saucecolor = "";
             sauce = "keine Soße";
             return}
         if (droppedSauce.state == false){
+            saucecolor = "#332200";
             droppedSauce.state = true;
             sauce = "Schokosoße";
             return}
@@ -435,10 +447,11 @@ function handleClickevent(_event: MouseEvent): void {
     if (155 >= hotspot.x && hotspot.x >= 125 && 677 >= hotspot.y && hotspot.y >= 662){
         if (droppedSauce.state == true){
             droppedSauce.state = false;
+            saucecolor = "";
             sauce = "keine Soße";
             return}
         if (droppedSauce.state == false){
-            droppedSauce.color = "red";
+            saucecolor = "red";
             droppedSauce.state = true;
             sauce = "Erdbeersoße";
             return}

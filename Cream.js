@@ -6,11 +6,11 @@ var Endabgabe;
         color;
         size;
         state;
-        constructor() {
+        constructor(_state) {
             // this.position = new Vector (_positionX, _positionY);
             this.color = "white";
             this.size = 1.2;
-            this.state = false;
+            this.state = _state;
         }
         draw(_positionX, _positionY) {
             if (this.state == true) {

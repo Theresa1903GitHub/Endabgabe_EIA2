@@ -5,15 +5,15 @@ var Endabgabe;
         position;
         color;
         state;
-        constructor(_positionX, _positionY) {
-            this.position = new Endabgabe.Vector(_positionX, _positionY);
-            this.color = "#332200";
+        constructor() {
+            // this.position = new Vector (_positionX, _positionY);
+            // this.color = "#332200"
             this.state = false;
         }
-        draw() {
+        draw(_color, _positionX, _positionY) {
             if (this.state == true) {
                 Endabgabe.crc2.save();
-                Endabgabe.crc2.translate(this.position.x, this.position.y);
+                Endabgabe.crc2.translate(_positionX, _positionY);
                 Endabgabe.crc2.beginPath();
                 Endabgabe.crc2.moveTo(12, 10);
                 Endabgabe.crc2.lineTo(-12, 13);
@@ -25,7 +25,7 @@ var Endabgabe;
                 Endabgabe.crc2.lineTo(19, 26);
                 Endabgabe.crc2.lineTo(19, 27);
                 Endabgabe.crc2.lineTo(-10, 29);
-                Endabgabe.crc2.strokeStyle = this.color;
+                Endabgabe.crc2.strokeStyle = _color;
                 Endabgabe.crc2.lineWidth = 2;
                 Endabgabe.crc2.stroke();
                 Endabgabe.crc2.restore();

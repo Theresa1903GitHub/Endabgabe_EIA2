@@ -10,6 +10,7 @@ var Endabgabe;
         }
         for (let i of Endabgabe.Menu) {
             let newSundaeDiv = document.createElement("form");
+            newSundaeDiv.id = "Sundae";
             newSundaeDiv.classList.add("newSundae");
             let menu = document.getElementById("menu");
             menu.classList.add("menu");
