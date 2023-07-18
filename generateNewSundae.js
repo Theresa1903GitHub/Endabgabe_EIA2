@@ -74,12 +74,12 @@ var Endabgabe;
             menu.appendChild(Space);
             Trash.addEventListener("click", async function () {
                 await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=delete&collection=Recipes&id=" + i);
-                deleteTask(newSundaeDiv, Space);
+                deleteRecipe(newSundaeDiv, Space);
             });
             newSundaeDiv.addEventListener("change", function () {
-                editTask();
+                editRecipe();
             });
-            async function editTask() {
+            async function editRecipe() {
                 let changedName = Title.value;
                 let changedFlavor = Flavor.value;
                 let changedIceballs = Iceballs.value;
@@ -104,7 +104,7 @@ var Endabgabe;
             menu.appendChild(Space);
         }
         ;
-        async function deleteTask(_data, _data2) {
+        async function deleteRecipe(_data, _data2) {
             let menu = document.getElementById("menu");
             menu.removeChild(_data);
             menu.removeChild(_data2);

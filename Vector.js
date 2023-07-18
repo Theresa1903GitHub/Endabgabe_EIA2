@@ -19,10 +19,6 @@ var Endabgabe;
             this.x += _addend.x;
             this.y += _addend.y;
         }
-        mirror() {
-            this.x = -this.x;
-            this.y = this.y;
-        }
     }
     Endabgabe.Vector = Vector;
 })(Endabgabe || (Endabgabe = {}));

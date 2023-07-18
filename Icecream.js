@@ -51,10 +51,6 @@ var Endabgabe;
                 Sprinkles.draw(this.position.x, this.position.y);
                 let droppedSauce = new Endabgabe.Sauce(this.sauce);
                 droppedSauce.draw(this.sauceColor, this.position.x, this.position.y - 20);
-                // droppedSauce.draw(this.sauceColor, this.position.x, this.position.y);
-            }
-            else {
-                console.log("");
             }
         }
         move(_timeslice) {

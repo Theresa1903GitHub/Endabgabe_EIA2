@@ -21,11 +21,6 @@ namespace Endabgabe {
             this.x += _addend.x;
             this.y += _addend.y;
         }
-
-        public mirror(): void{
-            this.x = -this.x;
-            this.y = this.y;
-        }
     }
     
 }

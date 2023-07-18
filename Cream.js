@@ -7,7 +7,6 @@ var Endabgabe;
         size;
         state;
         constructor(_state) {
-            // this.position = new Vector (_positionX, _positionY);
             this.color = "white";
             this.size = 1.2;
             this.state = _state;

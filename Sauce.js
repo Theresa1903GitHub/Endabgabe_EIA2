@@ -6,8 +6,6 @@ var Endabgabe;
         color;
         state;
         constructor(_state) {
-            // this.position = new Vector (_positionX, _positionY);
-            // this.color = "#332200"
             this.state = _state;
         }
         draw(_color, _positionX, _positionY) {

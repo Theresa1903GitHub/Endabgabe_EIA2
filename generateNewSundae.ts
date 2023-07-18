@@ -88,14 +88,14 @@ namespace Endabgabe {
 
             Trash.addEventListener("click", async function () {
                 await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=delete&collection=Recipes&id=" + i);
-                deleteTask(newSundaeDiv, Space);                         
+                deleteRecipe(newSundaeDiv, Space);                         
             });
 
             newSundaeDiv.addEventListener("change", function (): void {
-                editTask();
+                editRecipe();
             });
 
-            async function editTask() {
+            async function editRecipe() {
                 let changedName = Title.value;
                 let changedFlavor = Flavor.value;
                 let changedIceballs = Iceballs.value;
@@ -123,7 +123,7 @@ namespace Endabgabe {
             menu.appendChild(Space);
         };
 
-        async function deleteTask(_data: HTMLFormElement, _data2: HTMLDivElement) {
+        async function deleteRecipe(_data: HTMLFormElement, _data2: HTMLDivElement) {
             let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
             menu.removeChild(_data);
             menu.removeChild(_data2);

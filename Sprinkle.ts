@@ -1,15 +1,13 @@
 namespace Endabgabe {
 
     export class Sprinkle {
-        position: Vector;
-        color: string;
-        size: number;
-        state: boolean;
+        public position: Vector;
+        private color: string;
+        public state: boolean;
 
         public constructor (_state: boolean){
             // this.position = new Vector (570, 670);
             this.color = "#442200";
-            this.size = 1.2;
             this.state = _state;
         }
     

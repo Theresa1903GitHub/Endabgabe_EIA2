@@ -1,13 +1,12 @@
 namespace Endabgabe {
 
     export class Cream {
-        position: Vector;
-        color: string;
-        size: number;
-        state: boolean;
+        public position: Vector;
+        private color: string;
+        private size: number;
+        public state: boolean;
 
         public constructor (_state:boolean){
-            // this.position = new Vector (_positionX, _positionY);
             this.color = "white";
             this.size = 1.2;
             this.state = _state;

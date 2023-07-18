@@ -1,14 +1,14 @@
 namespace Endabgabe {
     export class Icecream {
-        position: Vector;
-        velocity: Vector;
-        state: string;
-        iceballs: string;
-        color: string;
-        sauce:boolean;
-        sauceColor: string;
-        whip: boolean;
-        sprinkels: boolean;
+        public position: Vector;
+        public velocity: Vector;
+        public state: string;
+        private iceballs: string;
+        private color: string;
+        private sauce: boolean;
+        private sauceColor: string;
+        private whip: boolean;
+        private sprinkels: boolean;
         
 
         public constructor (_x:number, _y:number, _number:string, _flavor: string, _sauce: boolean, _saucecolor: string, _creamstate: boolean, _sprinkles: boolean){
@@ -53,24 +53,13 @@ namespace Endabgabe {
                 Sprinkles.draw(this.position.x, this.position.y);
                 let droppedSauce: Sauce = new Sauce (this.sauce);
                 droppedSauce.draw(this.sauceColor,this.position.x, this.position.y-20);
-                // droppedSauce.draw(this.sauceColor, this.position.x, this.position.y);
-
-
+                }
             }
-        else{ console.log("");
-        }
-            }
-    
-
-                
-        
-        
-        public move(_timeslice: number){
+  
+        public move(_timeslice: number): void{
             let offset: Vector = new Vector(this.velocity.x, this.velocity.y);
             offset.scale(_timeslice);
             this.position.add(offset);
-             
-
-    }
+        }
     }
 }

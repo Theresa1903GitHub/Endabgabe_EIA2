@@ -1,13 +1,11 @@
 namespace Endabgabe {
 
     export class Sauce {
-        position: Vector;
-        color: string;
-        state: boolean;
+        public position: Vector;
+        public color: string;
+        public state: boolean;
 
         public constructor (_state: boolean){
-            // this.position = new Vector (_positionX, _positionY);
-            // this.color = "#332200"
             this.state = _state;
         }
     

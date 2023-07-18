@@ -4,12 +4,10 @@ var Endabgabe;
     class Sprinkle {
         position;
         color;
-        size;
         state;
         constructor(_state) {
             // this.position = new Vector (570, 670);
             this.color = "#442200";
-            this.size = 1.2;
             this.state = _state;
         }
         draw(_positionX, _positionY) {

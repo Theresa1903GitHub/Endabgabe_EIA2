@@ -14,11 +14,10 @@ var Endabgabe;
             this.velocity = new Endabgabe.Vector(0, 80);
             this.activity = "move";
             this.status = "happy";
-            // this.color = _color;
             this.appointment = _number;
         }
         draw(_randomSundae) {
-            if (this.activity == "move" || this.activity == "served") {
+            if (this.activity == "move" || this.activity == "served" || this.activity == "sitting") {
                 Endabgabe.crc2.save();
                 Endabgabe.crc2.translate(this.position.x, this.position.y);
                 Endabgabe.crc2.beginPath();
@@ -107,72 +106,16 @@ var Endabgabe;
                 Endabgabe.crc2.fillText(order, 30, 5);
                 Endabgabe.crc2.restore();
             }
-            if (this.activity == "sitting") {
-                Endabgabe.crc2.save();
-                Endabgabe.crc2.translate(this.position.x, this.position.y);
-                Endabgabe.crc2.beginPath();
-                Endabgabe.crc2.arc(0, 0, 20, 0, 2 * Math.PI, true);
-                if (this.status == "happy") {
-                    Endabgabe.crc2.fillStyle = "#fde1b4";
-                }
-                else {
-                    Endabgabe.crc2.fillStyle = "red";
-                }
-                Endabgabe.crc2.fill();
-                Endabgabe.crc2.strokeStyle = "black";
-                Endabgabe.crc2.lineWidth = 0.5;
-                Endabgabe.crc2.stroke();
-                Endabgabe.crc2.closePath();
-                // Auge links
-                Endabgabe.crc2.beginPath();
-                Endabgabe.crc2.arc(-5, -2, 3, 0, 2 * Math.PI, true);
-                Endabgabe.crc2.fillStyle = "black";
-                Endabgabe.crc2.fill();
-                Endabgabe.crc2.closePath();
-                // Auge rechts
-                Endabgabe.crc2.beginPath();
-                Endabgabe.crc2.arc(5, -2, 3, 0, 2 * Math.PI, true);
-                Endabgabe.crc2.fillStyle = "black";
-                Endabgabe.crc2.fill();
-                Endabgabe.crc2.closePath();
-                // Mund
-                Endabgabe.crc2.beginPath();
-                if (this.status == "happy") {
-                    Endabgabe.crc2.arc(0, 0, 10, 0.2 * Math.PI, 0.8 * Math.PI);
-                }
-                else {
-                    Endabgabe.crc2.arc(0, 15, 10, 1.2 * Math.PI, 1.8 * Math.PI);
-                }
-                Endabgabe.crc2.strokeStyle = "black";
-                Endabgabe.crc2.lineWidth = 3;
-                Endabgabe.crc2.stroke();
-                Endabgabe.crc2.restore();
-            }
         }
-        order(_randomSundae) {
-            let order = Endabgabe.MenuList[_randomSundae];
-            console.log(order);
-            Endabgabe.crc2.save();
-            Endabgabe.crc2.translate(this.position.x, this.position.y);
-            Endabgabe.crc2.beginPath();
-            Endabgabe.crc2.ellipse(15, -10, 70, 45, 0, 0, 2 * Math.PI, true);
-            Endabgabe.crc2.closePath();
-            Endabgabe.crc2.fillStyle = "white";
-            Endabgabe.crc2.fill();
-            Endabgabe.crc2.strokeStyle = "black";
-            Endabgabe.crc2.lineWidth = 2;
-            Endabgabe.crc2.strokeText(order, 0, 0);
-            Endabgabe.crc2.restore();
-        }
-        move(_timeslice, _strength) {
+        move(_timeslice) {
             if (this.activity == "waiting") {
+                let angryLevel = Math.random() * 5000 + 14000;
                 setTimeout(() => {
                     if (this.activity == "waiting") {
                         this.status = "angry";
                     }
                     ;
-                }, 13000);
-                return;
+                }, angryLevel);
             }
             if (this.activity == "move") {
                 let queueLength = Endabgabe.queue - ((Endabgabe.waitingCustomers.length + 1) * 70);
@@ -205,21 +148,14 @@ var Endabgabe;
                 offset.scale(_timeslice);
                 this.position.add(offset);
                 if (this.position.x <= 210 || this.position.x >= 550) {
-                    this.activity = "eating";
+                    this.activity = "sitting";
                 }
             }
-            if (this.activity == "eating") {
-                this.activity = "sitting";
+            if (this.activity == "sitting") {
                 setTimeout(() => {
                     this.activity = "move";
                 }, 6000);
                 this.velocity.set(0, -80);
-            }
-            if (this.activity == "moveout") {
-                this.velocity.set(0, -80);
-                let offset = new Endabgabe.Vector(this.velocity.x, this.velocity.y);
-                offset.scale(_timeslice);
-                this.position.add(offset);
             }
         }
     }
