@@ -3,7 +3,7 @@ namespace Endabgabe {
         Aufgabe: Endabgabe_Eisdealer
         Name: Theresa Hauser
         Matrikel: 272983
-        Datum: 03.07.23
+        Datum: 18.07.23
         Zusammenarbeit mit Pia Schwer
         Quellen: Stack Overflow, Developer Mozilla, Inverted Classroom Jirka, Tasks aus EIA1&2
         */
@@ -113,15 +113,15 @@ namespace Endabgabe {
         // refreshMenu(); 
     };
 
-async function generateMenu():Promise<void>{
-        let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-        let sundae: string = await response.text();
-        data = JSON.parse(sundae);
+// async function generateMenu():Promise<void>{
+//         let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
+//         let sundae: string = await response.text();
+//         data = JSON.parse(sundae);
 
-        generateNewSundae(data);
-}
+//         generateNewSundae(data);
+// }
 
-async function refreshMenu():Promise<void>{
+// async function refreshMenu():Promise<void>{
     // let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
     
     // for (let j= menu.childNodes.length; j>=0; j-- ) {
@@ -129,7 +129,7 @@ async function refreshMenu():Promise<void>{
     // }
 
     // generateMenu();
-} 
+// } 
 
 function drawBackground(): void {
         let gradient: CanvasGradient = crc2.createLinearGradient(0, 0, 0, crc2.canvas.height);
@@ -492,13 +492,13 @@ function finishedSundae (_data: menu): boolean{
         recipe.push(orderTitle, orderFlavor, orderIceballs, orderCream, orderSauce, orderSprinkles, orderPrice);
         }
         
-    console.log(recipe[orderedNumber*7]);
-    console.log(recipe[orderedNumber*7+1]);
-    console.log(recipe[orderedNumber*7+2]);
-    console.log(recipe[orderedNumber*7+3]);
-    console.log(recipe[orderedNumber*7+4]);
-    console.log(recipe[orderedNumber*7+5]);
-    console.log(recipe[orderedNumber*7+6]);
+    // console.log(recipe[orderedNumber*7]);
+    // console.log(recipe[orderedNumber*7+1]);
+    // console.log(recipe[orderedNumber*7+2]);
+    // console.log(recipe[orderedNumber*7+3]);
+    // console.log(recipe[orderedNumber*7+4]);
+    // console.log(recipe[orderedNumber*7+5]);
+    // console.log(recipe[orderedNumber*7+6]);
 
 
     let mySundae: Sundae = {

@@ -5,7 +5,7 @@ var Endabgabe;
         Aufgabe: Endabgabe_Eisdealer
         Name: Theresa Hauser
         Matrikel: 272983
-        Datum: 03.07.23
+        Datum: 18.07.23
         Zusammenarbeit mit Pia Schwer
         Quellen: Stack Overflow, Developer Mozilla, Inverted Classroom Jirka, Tasks aus EIA1&2
         */
@@ -78,19 +78,19 @@ var Endabgabe;
         // refreshMenu(); 
     }
     ;
-    async function generateMenu() {
-        let response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
-        let sundae = await response.text();
-        data = JSON.parse(sundae);
-        Endabgabe.generateNewSundae(data);
-    }
-    async function refreshMenu() {
-        // let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
-        // for (let j= menu.childNodes.length; j>=0; j-- ) {
-        //     menu.removeChild(menu.childNodes[j]);
-        // }
-        // generateMenu();
-    }
+    // async function generateMenu():Promise<void>{
+    //         let response: Response = await fetch("https://webuser.hs-furtwangen.de/~hauserth/Database/?command=find&collection=Recipes");
+    //         let sundae: string = await response.text();
+    //         data = JSON.parse(sundae);
+    //         generateNewSundae(data);
+    // }
+    // async function refreshMenu():Promise<void>{
+    // let menu: HTMLElement = <HTMLElement>document.getElementById("menu");
+    // for (let j= menu.childNodes.length; j>=0; j-- ) {
+    //     menu.removeChild(menu.childNodes[j]);
+    // }
+    // generateMenu();
+    // } 
     function drawBackground() {
         let gradient = Endabgabe.crc2.createLinearGradient(0, 0, 0, Endabgabe.crc2.canvas.height);
         gradient.addColorStop(0, "HSL(100, 80%, 30%)");
@@ -442,13 +442,13 @@ var Endabgabe;
             let orderPrice = _data.data[i].price;
             recipe.push(orderTitle, orderFlavor, orderIceballs, orderCream, orderSauce, orderSprinkles, orderPrice);
         }
-        console.log(recipe[orderedNumber * 7]);
-        console.log(recipe[orderedNumber * 7 + 1]);
-        console.log(recipe[orderedNumber * 7 + 2]);
-        console.log(recipe[orderedNumber * 7 + 3]);
-        console.log(recipe[orderedNumber * 7 + 4]);
-        console.log(recipe[orderedNumber * 7 + 5]);
-        console.log(recipe[orderedNumber * 7 + 6]);
+        // console.log(recipe[orderedNumber*7]);
+        // console.log(recipe[orderedNumber*7+1]);
+        // console.log(recipe[orderedNumber*7+2]);
+        // console.log(recipe[orderedNumber*7+3]);
+        // console.log(recipe[orderedNumber*7+4]);
+        // console.log(recipe[orderedNumber*7+5]);
+        // console.log(recipe[orderedNumber*7+6]);
         let mySundae = {
             title: recipe[orderedNumber * 7],
             flavor: flavor,
